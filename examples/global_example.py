@@ -22,7 +22,7 @@ if __name__ == '__main__':
     '''
     # build environment
     start = (5, 5)
-    goal = (45, 25)
+    goal = (12, 5)
     env = Grid(51, 31)
 
     # creat planner

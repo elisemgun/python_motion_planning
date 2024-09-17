@@ -40,28 +40,30 @@ class Env(ABC):
 
 class Grid(Env):
     """
-    Class for discrete 2-d grid map.
+    Class for discrete 2-d grid map based on user-defined layout.
     """
     def __init__(self, x_range: int, y_range: int) -> None:
         super().__init__(x_range, y_range)
-        # allowed motions
-        self.motions = [Node((-1, 0), None, 1, None), Node((-1, 1),  None, sqrt(2), None),
-                        Node((0, 1),  None, 1, None), Node((1, 1),   None, sqrt(2), None),
-                        Node((1, 0),  None, 1, None), Node((1, -1),  None, sqrt(2), None),
-                        Node((0, -1), None, 1, None), Node((-1, -1), None, sqrt(2), None)]
+        # allowed motions (you can move in 8 directions)
+        self.motions = [
+            Node((-1, 0), None, 1, None), Node((-1, 1), None, sqrt(2), None),
+            Node((0, 1), None, 1, None), Node((1, 1), None, sqrt(2), None),
+            Node((1, 0), None, 1, None), Node((1, -1), None, sqrt(2), None),
+            Node((0, -1), None, 1, None), Node((-1, -1), None, sqrt(2), None)
+        ]
         # obstacles
         self.obstacles = None
         self.obstacles_tree = None
         self.init()
-    
+
     def init(self) -> None:
         """
-        Initialize grid map.
+        Initialize grid map based on the actual grid image provided.
         """
         x, y = self.x_range, self.y_range
         obstacles = set()
 
-        # boundary of environment
+        # boundary of the environment (black border in the image)
         for i in range(x):
             obstacles.add((i, 0))
             obstacles.add((i, y - 1))
@@ -69,16 +71,31 @@ class Grid(Env):
             obstacles.add((0, i))
             obstacles.add((x - 1, i))
 
-        # user-defined obstacles        
-        for i in range(10, 21):
-            obstacles.add((i, 15))
-        for i in range(15):
-            obstacles.add((20, i))
-        for i in range(15, 30):
-            obstacles.add((30, i))
-        for i in range(16):
-            obstacles.add((40, i))
+        # Add horizontal and vertical walls as obstacles based on the grid image
+        # These are the black lines in the image
 
+        # Horizontal walls
+        for i in range(10, 20): 
+            obstacles.add((i, 22))
+        for i in range(10, 20): 
+            obstacles.add((i, 16))
+        for i in range(10, 20): 
+            obstacles.add((i, 10))
+
+        for i in range(25, 35): 
+            obstacles.add((i, 22))
+        for i in range(25, 35): 
+            obstacles.add((i, 16))
+        for i in range(25, 35): 
+            obstacles.add((i, 10))
+        
+        # Vertical walls
+        for i in range(0, 10): 
+            obstacles.add((10, i))
+        for i in range(12, 25): 
+            obstacles.add((43, i))
+        
+        
         self.obstacles = obstacles
         self.obstacles_tree = cKDTree(np.array(list(obstacles)))
 
