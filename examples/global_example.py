@@ -4,6 +4,9 @@
 @author: Winter
 @update: 2023.3.2
 """
+import os
+import sys
+sys.path.append(os.path.join(os.path.dirname(__file__), ".."))
 
 from python_motion_planning.utils import Grid, Map, SearchFactory
 
@@ -23,7 +26,7 @@ if __name__ == '__main__':
     env = Grid(51, 31)
 
     # creat planner
-    # planner = search_factory("a_star", start=start, goal=goal, env=env)
+    planner = search_factory("a_star", start=start, goal=goal, env=env)
     # planner = search_factory("dijkstra", start=start, goal=goal, env=env)
     # planner = search_factory("gbfs", start=start, goal=goal, env=env)
     # planner = search_factory("theta_star", start=start, goal=goal, env=env)
@@ -37,7 +40,7 @@ if __name__ == '__main__':
     #                             max_edge_len=10.0, inflation_r=1.0)
 
     # animation
-    # planner.run()
+    planner.run()
 
     # ========================================================
 
@@ -64,5 +67,5 @@ if __name__ == '__main__':
     evolutionary search
     '''
     # planner = search_factory("aco", start=start, goal=goal, env=env)
-    planner = search_factory("pso", start=start, goal=goal, env=env)
-    planner.run()
+    # planner = search_factory("pso", start=start, goal=goal, env=env)
+    # planner.run()
