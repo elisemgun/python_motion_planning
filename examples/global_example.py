@@ -21,9 +21,16 @@ if __name__ == '__main__':
     graph search
     '''
     # build environment
+
+    # # Choose between Kiwi:
+    # start = (5, 5)
+    # goal = (12, 5)
+    # env = Grid(51, 31)
+
+    # or Rema 1000:
     start = (5, 5)
-    goal = (12, 5)
-    env = Grid(51, 31)
+    goal = (50, 5)
+    env = Grid(72, 92)
 
     # creat planner
     planner = search_factory("a_star", start=start, goal=goal, env=env)
