@@ -105,7 +105,19 @@ class Grid(Env):
         self.obstacles = obstacles 
         self.obstacles_tree = cKDTree(np.array(list(obstacles)))
 
+    def add_random_obstacles(self):
+        """
+        Add random obstacles to the grid.
+        """
+        num_obstacles = random.randint(1, 10)
+        for _ in range(num_obstacles):
+            x = random.randint(1, self.x_range - 2)
+            y = random.randint(1, self.y_range - 2)
+            if (x, y) not in self.obstacles and (x, y) != self.start and (x, y) != self.goal:
+                self.obstacles.add((x, y))
 
+        # Update the KD-tree
+        self.obstacles_tree = cKDTree(np.array(list(self.obstacles)))
 
 class Map(Env):
     """
