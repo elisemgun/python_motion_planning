@@ -4,6 +4,8 @@
 @author: Winter
 @update: 2023.1.13
 """
+import random
+
 from math import sqrt
 from abc import ABC, abstractmethod
 from scipy.spatial import cKDTree
@@ -71,81 +73,38 @@ class Grid(Env):
             obstacles.add((0, i))
             obstacles.add((x - 1, i))
 
-        # This is the outline of Kiwi
+        # Add horizontal and vertical walls as obstacles based on the grid image
+        # These are the black lines in the image
+
         # Horizontal walls
+        for i in range(10, 20): 
+            obstacles.add((i, 22))
+        for i in range(10, 20): 
+            obstacles.add((i, 16))
+        for i in range(10, 20): 
+            obstacles.add((i, 10))
 
-        # for i in range(10, 20): 
-        #     obstacles.add((i, 22))
-        # for i in range(10, 20): 
-        #     obstacles.add((i, 16))
-        # for i in range(10, 20): 
-        #     obstacles.add((i, 10))
-
-        # for i in range(25, 35): 
-        #     obstacles.add((i, 22))
-        # for i in range(25, 35): 
-        #     obstacles.add((i, 16))
-        # for i in range(25, 35): 
-        #     obstacles.add((i, 10))
+        for i in range(25, 35): 
+            obstacles.add((i, 22))
+        for i in range(25, 35): 
+            obstacles.add((i, 16))
+        for i in range(25, 35): 
+            obstacles.add((i, 10))
         
-        # # Vertical walls
-        # for i in range(0, 10): 
-        #     obstacles.add((10, i))
-        # for i in range(12, 25): 
-        #     obstacles.add((43, i))
-
-        # This is the outline of Rema 1000
-
-        for i in range(0, 20): 
-            obstacles.add((30, i))
-
-        for i in range(25, 45): 
-            obstacles.add((30, i))
-
-        for i in range(25, 45): 
-            obstacles.add((40, i))
+        # Vertical walls
+        for i in range(0, 10): 
+            obstacles.add((10, i))
+        for i in range(12, 25): 
+            obstacles.add((43, i))
         
-        for i in range(25, 45): 
-            obstacles.add((50, i))
-
-        for i in range(25, 45): 
-            obstacles.add((60, i))
-
-        for i in range(55, 75): 
-            obstacles.add((30, i))
-
-        for i in range(55, 75): 
-            obstacles.add((40, i))
         
-        for i in range(55, 75): 
-            obstacles.add((50, i))
-
-        for i in range(55, 75): 
-            obstacles.add((60, i))
-
-        for i in range(18, 30): 
-            for j in range(13, 17): 
-                obstacles.add((j, i))
-
-        for i in range(35, 47): 
-            for j in range(13, 17): 
-                obstacles.add((j, i))
-
-        for i in range(57, 69): 
-            for j in range(13, 17): 
-                obstacles.add((j, i))
-
-        for i in range(74, 86): 
-            for j in range(13, 17): 
-                obstacles.add((j, i))
-        
-
         self.obstacles = obstacles
         self.obstacles_tree = cKDTree(np.array(list(obstacles)))
 
     def update(self, obstacles):
         self.obstacles = obstacles 
         self.obstacles_tree = cKDTree(np.array(list(obstacles)))
+
 
 
 class Map(Env):
