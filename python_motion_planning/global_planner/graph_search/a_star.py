@@ -5,6 +5,7 @@
 @update: 2024.6.23
 """
 import heapq
+import time
 
 from .graph_search import GraphSearcher
 from python_motion_planning.utils import Env, Node
@@ -120,5 +121,14 @@ class AStar(GraphSearcher):
         """
         Running both planning and animation.
         """
+
+        start_time = time.perf_counter()
+
         cost, path, expand = self.plan()
-        self.plot.animation(path, str(self), cost, expand)
+
+        end_time = time.perf_counter()
+
+        # Calculate the elapsed time
+        execution_time = end_time - start_time
+        print(f"Elapsed time: {execution_time} seconds")
+        # self.plot.animation(path, str(self), cost, expand)

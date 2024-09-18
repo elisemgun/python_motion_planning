@@ -47,7 +47,8 @@ if __name__ == '__main__':
     #                             max_edge_len=10.0, inflation_r=1.0)
 
     # animation
-    planner.run()
+    for i in range(10):
+        planner.run()
 
     # ========================================================
 
