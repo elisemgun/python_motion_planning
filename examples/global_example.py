@@ -55,26 +55,26 @@ if __name__ == '__main__':
             while start == goal:
                 goal = get_random_point(env)
 
-            for j in range(10):
-                for alg in algorithms:
-                    planner = search_factory(alg, start=start, goal=goal, env=env)
+            
+            for alg in algorithms:
+                planner = search_factory(alg, start=start, goal=goal, env=env)
 
-                    start_time = time.perf_counter()
-                    cost, path, expanded = planner.plan()
+                start_time = time.perf_counter()
+                cost, path, expanded = planner.plan()
 
-                    # cost is all nodes visited
-                    # path is the path from start to goal
+                # cost is all nodes visited
+                # path is the path from start to goal
 
-                    end_time = time.perf_counter()
-                    elapsed_time = end_time - start_time
-                    
-                    # Format time to always show six decimal places (without scientific notation)
-                    round_time = format(elapsed_time, ".10f")
+                end_time = time.perf_counter()
+                elapsed_time = end_time - start_time
+                
+                # Format time to always show six decimal places (without scientific notation)
+                round_time = format(elapsed_time, ".10f")
 
-                    length = len(path)
-                    expanded = len(expanded)
-                    
-                    results.append([alg, round_time, cost, length, expanded, start, goal])
+                length = len(path)
+                expanded = len(expanded)
+                
+                results.append([alg, round_time, cost, length, expanded, start, goal])
 
             # Write results to the CSV 
             writer.writerows(results)
