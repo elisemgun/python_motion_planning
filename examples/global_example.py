@@ -48,7 +48,7 @@ if __name__ == '__main__':
         writer = csv.writer(file)
         writer.writerow(["Algorithm", "Time (seconds)", "Cost", "Path", "Cost length?", "Start Point", "Goal Point"])
 
-        for i in range(1000):
+        for i in range(800):
             start = get_random_point(env)
             goal = get_random_point(env)
 
@@ -67,17 +67,19 @@ if __name__ == '__main__':
 
                     end_time = time.perf_counter()
                     elapsed_time = end_time - start_time
+                    
+                    # Format time to always show six decimal places (without scientific notation)
+                    round_time = format(elapsed_time, ".10f")
 
                     length = len(path)
                     expanded = len(expanded)
                     
-                    results.append([alg, elapsed_time, cost, length, expanded, start, goal])
+                    results.append([alg, round_time, cost, length, expanded, start, goal])
 
-                # Write results to the CSV every second iteration (j % 2 == 1)
-                if j % 2 == 1:
-                    writer.writerows(results)
-                    file.flush()  # Ensure that the data is written to disk
-                    results = []  # Clear results after writing to avoid duplicate entries
+            # Write results to the CSV 
+            writer.writerows(results)
+            file.flush()  # Ensure that the data is written to disk
+            results = []  # Clear results after writing to avoid duplicate entries
 
     print("Results saved to planner_results.csv")
 
