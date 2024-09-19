@@ -131,4 +131,4 @@ class AStar(GraphSearcher):
         # Calculate the elapsed time
         execution_time = end_time - start_time
         print(f"Elapsed time: {execution_time} seconds")
-        # self.plot.animation(path, str(self), cost, expand)
+        self.plot.animation(path, str(self), cost, expand)
