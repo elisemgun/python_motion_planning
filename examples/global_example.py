@@ -24,9 +24,6 @@ if __name__ == '__main__':
     graph search
     '''
     # build environment
-
-    # start = (18, 8)
-    # goal = (37, 18)
     env = Grid(51, 31)
 
     # --------------------------------------------------------
@@ -46,39 +43,44 @@ if __name__ == '__main__':
         
         return point
     
-    for i in range(100):
-        start = get_random_point(env)
-        goal = get_random_point(env)
-
-        while start == goal:
-            goal = get_random_point(env)
-
-        for alg in algorithms:
-            planner = search_factory(alg, start=start, goal=goal, env=env)
-
-            start_time = time.perf_counter()
-            cost, path, expanded = planner.plan()
-
-            # cost is all nodes visited
-            # path is the path from start to goal
-
-            end_time = time.perf_counter()
-            elapsed_time = end_time - start_time
-
-            length = len(path)
-            expanded = len(expanded)
-            
-            results.append([alg, elapsed_time, cost, length, expanded, start, goal])
-
-    '''
-    Write results to CSV
-    '''
+    # Open the CSV file once at the beginning
     with open('planner_results.csv', mode='w', newline='') as file:
         writer = csv.writer(file)
         writer.writerow(["Algorithm", "Time (seconds)", "Cost", "Path", "Cost length?", "Start Point", "Goal Point"])
-        writer.writerows(results)
-    
+
+        for i in range(1000):
+            start = get_random_point(env)
+            goal = get_random_point(env)
+
+            while start == goal:
+                goal = get_random_point(env)
+
+            for j in range(10):
+                for alg in algorithms:
+                    planner = search_factory(alg, start=start, goal=goal, env=env)
+
+                    start_time = time.perf_counter()
+                    cost, path, expanded = planner.plan()
+
+                    # cost is all nodes visited
+                    # path is the path from start to goal
+
+                    end_time = time.perf_counter()
+                    elapsed_time = end_time - start_time
+
+                    length = len(path)
+                    expanded = len(expanded)
+                    
+                    results.append([alg, elapsed_time, cost, length, expanded, start, goal])
+
+                # Write results to the CSV every second iteration (j % 2 == 1)
+                if j % 2 == 1:
+                    writer.writerows(results)
+                    file.flush()  # Ensure that the data is written to disk
+                    results = []  # Clear results after writing to avoid duplicate entries
+
     print("Results saved to planner_results.csv")
+
 
     # # --------------------------------------------------------
             
